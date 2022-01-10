@@ -71,36 +71,48 @@ Fake_Bailout_pre, Fake_Bailout_post:
 #include "DE-Raytracer.frag"
 
 #group NewtonVarPower
-//Power n for the equation q^n + JuliaC = 0
-uniform float Power; slider[-16,3,16]
-
-//Known solution of the polynomial (and origin of the implicite inversion)
-//HINT:  Start with Solution = 1.0, Julia=true, JuliaC=(-1,0,0)
-//       Other params for Solution, and JuliaC are mainly useful if using this frag as pretransform
-uniform vec3 Solution; slider[(-4,-4,-4),(1,0,0),(4,4,4)]
-
-//Core parameters to tweak the fractal
-uniform float Factor_Phi; slider[-20,1,20]
-uniform float Factor_Theta; slider[-20,1,20]
-uniform float Fake_Bailout_pre; slider[-20,1,20]
-uniform float Fake_Bailout_post; slider[-20,1,20]
-uniform float Vary_Inversion; slider[-4,-1,0]
-
-//Core iteration controls
-uniform float Offset; slider[1.0e-15,0.0001,1]
-uniform float Bailout; slider[0.001,4,1024]
-uniform int Iterations; slider[1,40,200]
-uniform int ColorIterations; slider[0,3,20]
-
-//DE tweaks
-uniform float DEscale1; slider[0,1,2]
-uniform float DEoffset1; slider[0,0,8]
-
-//Julia + c controls
-//HINT:  Start with Solution = 1.0, Julia=true, JuliaC=(-1,0,0)
-//       Other params for Solution, and JuliaC are mainly useful if using this frag as pretransform
-uniform bool Julia; checkbox[true]
-uniform vec3 JuliaC; slider[(-4,-4,-4),(-1,0,0),(4,4,4)]
+   //Power n for the equation q^n + JuliaC = 0
+   uniform float Power; slider[-32,3,32]
+   
+   //Known solution of the polynomial (and origin of the implicite inversion)
+   uniform vec3 Solution; slider[(-4,-4,-4),(1,0,0),(4,4,4)]
+   //HINT:  Start with Solution = 1.0, Julia=true, JuliaC=(-1,0,0)
+   //       Other params for Solution, and JuliaC are mainly useful if using this frag as pretransform
+   
+   //Core parameters to tweak the fractal
+   //Factor to vary the phi angle of the power calculations
+   uniform float Factor_Phi; slider[-20,1,20]
+   //Factor to vary the theta angle of the power calculations
+   uniform float Factor_Theta; slider[-20,1,20]
+   //Vary the calculation of the absolute value of q BEFORE the Newton calc (HINT:  Try also negative values) 
+   uniform float Fake_Bailout_pre; slider[-20,1,20]
+   //Vary the calculation of the absolute value of q AFTER the Newton calc (HINT:  Try also negative values) 
+   uniform float Fake_Bailout_post; slider[-20,1,20]
+   //Vary the inversion of q (similar to Fake_Bailout, but affects only y, and z)
+   uniform float Vary_Inversion; slider[-4,-1,0]
+   
+   //Core iteration controls - FOR NEWTON + FOLDING ONLY
+   //Offset to avoid the division by zero, you usually don't need to change the value
+   uniform float Offset; slider[1.0e-15,0.0001,1]
+   //Usual bailout value (for |1/(q-solution)|). ATTENTION:  Needs to be changed for powers <> 3!
+   uniform float Bailout; slider[0.001,4,1024]
+   //Number of Newton iterations. HINT: Start with a value of 1 or 2 - here the Newton function is used as pretransform !!
+   uniform int Iterations; slider[0,1,200]
+   //Number of Newton iteration taken into account for color calculation
+   uniform int ColorIterations; slider[0,3,200]
+   
+   //DE tweaks - Scale
+   uniform float DEscale1; slider[0,1,2]
+   //DE tweaks - Offset
+   uniform float DEoffset1; slider[0,0,8]
+   
+   //Julia + c controls
+   //HINT:  Start with Solution = 1.0, Julia=true, JuliaC=(-1,0,0)
+   //       Other params for Solution, and JuliaC are mainly useful if using this frag as pretransform
+   //Julia calculation?
+   uniform bool Julia; checkbox[true]
+   //C value for Julia calculation
+   uniform vec3 JuliaC; slider[(-4,-4,-4),(-1,0,0),(4,4,4)]
 
 float sq_r, r, r1, dr, theta, phi, r_pow, theta_pow, phi_pow, pow_eff, fac_eff, cth, cph, sph, sth, tmpx, tmpy, tmpz, tmpx2, tmpy2, tmpz2, r_zxy, r_cxy, h, scale;
 vec3 c;
@@ -110,13 +122,17 @@ float DE(vec3 pos) {
 
 // Preparation operations
     vec3 z = pos;
+	r1 = length(z);
+	
     pow_eff = 1.0 - Power;
     fac_eff = (Power - 1.0)/Power;
-    r1 = length(z);
+    
     dr = 1.0;
     scale = 1.0;
     i = 0;
+	
     c = (Julia ? JuliaC : pos);
+	r_cxy = sqrt(c.x*c.x + c.y*c.y);
 
 //Main iteration loop
     while(r1<Bailout && (i<Iterations)) {
@@ -150,7 +166,6 @@ float DE(vec3 pos) {
       
     // Multiply c and z
           r_zxy = sqrt(tmpx*tmpx + tmpy*tmpy);
-          r_cxy = sqrt(c.x*c.x + c.y*c.y);
           
           h = 1 - c.z*tmpz/(r_cxy*r_zxy + Offset);
           
