@@ -15,9 +15,19 @@ To use this .frag files you should generally know how to work with Fragmentarium
 The formulas will be part of the Examples folder of that distribution.    
    
 ## Formula list
-_Will be added once there will be formulas here._   
-_Details, parameter descriptions etc will be shared as part of the .frag files._   
-
+_NOTE:  Details, parameter descriptions etc will be shared as part of the .frag files._   
+- **NewtonVarPower.frag**    
+  Pure Newton3D implementation for z^k-c=0 with configurable solution/inversion point    
+- **NewtonVarPowerWithRotatedFold.frag**    
+  Newton3D implementation for z^k-c=0 with configurable solution/inversion point    
+  PLUS MB3D style rotated foldings before, and after the Newton calculations    
+- **NewtonVarPowerWithRotatdFoldAndMenger.frag**    
+  Main calculation is a Menger calculation.    
+  Thought as pre-transforms:     
+  + Newton3D implementation for z^k-c=0 with configurable solution/inversion point    
+  + PLUS MB3D style rotated foldings before, and after the Newton calculations    
+ 
+    
 ## Disclaimer:
 At the begin the formulas will be tested on my box (currently a Windows 10 with an old AMD 280X card) - and sometimes nowhere else.     
 I know that glsl code is highly dependent from the hardware, especially there are differences in impementation between the hardware producers.   
