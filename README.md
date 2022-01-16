@@ -17,9 +17,11 @@ The formulas will be part of the Examples folder of that distribution.
 ## Formula list
 _NOTE:  Details, parameter descriptions etc will be shared as part of the .frag files._   
 - **NewtonVarPower.frag**    
-  Pure Newton3D implementation for z^k-c=0 with configurable solution/inversion point    
+  Pure Newton3D implementation for z^k+c=0 with configurable solution/inversion point    
+- **NewtonVarPowerSimplified.frag**    
+  Pure Newton3D implementation for z^k-_1_=0 with _fix_ solution/inversion point 1,0,0
 - **NewtonVarPowerWithRotatedFold.frag**    
-  Newton3D implementation for z^k-c=0 with configurable solution/inversion point    
+  Newton3D implementation for z^k+c=0 with configurable solution/inversion point    
   PLUS MB3D style rotated foldings before, and after the Newton calculations    
 - **NewtonVarPowerWithRotatdFoldAndMenger.frag**    
   Main calculation is a Menger calculation.    
