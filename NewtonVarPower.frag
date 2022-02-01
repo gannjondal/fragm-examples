@@ -199,7 +199,9 @@ float DE(vec3 pos) {
    return 0.5*log(r1)*r1/dr;
 }
 
-#preset CommonNewtonBulb
+//preset 'Default' is a common Newton bulb
+
+#preset Default
 FOV = 0.4
 Eye = 1.41821122,1.39130151,-2.070901
 Target = -5.39926173,-2.73930773,3.9673178
@@ -222,13 +224,13 @@ AntiAliasScale = 1
 DepthToAlpha = false
 ShowDepth = false
 DepthMagnitude = 1
-Detail = -4.5
-DetailAO = -5
-FudgeFactor = 0.75
-MaxDistance = 3000
-MaxRaySteps = 2500
-Dither = 0
-NormalBackStep = 0 NotLocked
+Detail = -5.1
+DetailAO = -1
+FudgeFactor = 0.2
+MaxDistance = 1000
+MaxRaySteps = 6000
+Dither = 0.5
+NormalBackStep = 1.0 NotLocked
 AO = 0.203921571,0.203921571,0.203921571,0.83
 Specular = 0.6
 SpecularExp = 14
@@ -300,12 +302,12 @@ DepthToAlpha = false
 ShowDepth = false
 DepthMagnitude = 1
 Detail = -5.1
-DetailAO = -5
-FudgeFactor = 0.6
+DetailAO = -1
+FudgeFactor = 0.75
 MaxDistance = 100
-MaxRaySteps = 4192
-Dither = 0
-NormalBackStep = 2 NotLocked
+MaxRaySteps = 6000
+Dither = 0.5
+NormalBackStep = 1 NotLocked
 AO = 0.203921571,0.203921571,0.203921571,0.83
 Specular = 0.6
 SpecularExp = 14
@@ -353,7 +355,7 @@ Julia = true
 JuliaC = -1,0,0
 #endpreset
 
-#preset NewtonBulbColorVariant
+#preset NewtonBulbColor
 FOV = 0.9472675
 Eye = 0.590536351,0.393237328,-1.14650676
 Target = -0.191921449,0.19073232,-0.541399037
@@ -376,16 +378,16 @@ AntiAliasScale = 1
 DepthToAlpha = false
 ShowDepth = false
 DepthMagnitude = 1
-Detail = -4.5
-DetailAO = -0.19
+Detail = -4.75
+DetailAO = -0.5
 FudgeFactor = 0.2
-MaxDistance = 100
+MaxDistance = 600
 MaxRaySteps = 4821
-Dither = 0
-NormalBackStep = 0 NotLocked
+Dither = 0.875
+NormalBackStep = 1.0 NotLocked
 AO = 0.203921571,0.203921571,0.203921571,0.8
 Specular = 0.05
-SpecularExp = 20
+SpecularExp = 16
 SpecularMax = 10
 SpotLight = 1,0.937254902,0.858823529,0.5
 SpotLightDir = 0.80952382,0.52380954
