@@ -179,7 +179,7 @@ float DE(vec3 pos) {
           z.y = fac_eff*z.y + tmpy2;
           z.z = fac_eff*z.z + tmpz2;
          
-    // Below the hack that provides a divergent value of (x,y,z) to MB3D
+    // Below the hack that provides a divergent value of (x,y,z) to Fragmentarium
     // although the plain Newton method does always converge
           sq_r = Fake_Bailout_post/((dot(z-Solution,z-Solution))+ Offset);
           
